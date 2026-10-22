@@ -1,0 +1,254 @@
+1. Work in base environment
+source ~/.bashrc
+
+2. Create RSVision_hackathon directory with input, tmp and results sub-directories
+mkdir -p RSVision_hackathon/{input,tmp,results}
+
+3. Create a WHATIDID.txt file
+touch RSVision_hackathon/WHATIDID.txt
+
+4. Change into input directory and download the data
+cd RSVision_hackathon/input
+
+5. Download JSON data from https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/respiratory-syncytial-virus-rsv
+
+# Weekly RSV positivity of people receiving a PCR test in England
+
+6. Upload it into input directory
+
+https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/respiratory-syncytial-virus-rsv
+
+7. Get the themes
+GET /themes/infectious_disease/sub_themes/respiratory/topics/respiratory-syncytial-virus-rsv/geography_types/Nation/geographies/England/metrics/respiratory-syncytial-virus-rsv_casesByDay
+
+
+8. Activate GITHUB environment and check status
+conda activate GITHUB
+gh auth status
+
+9. Construct API wrapper
+from pathlib import Path
+
+rsv_clean = rsv_df[
+    ["date", "metric_value"]
+].copy()
+
+rsv_clean = rsv_clean.rename(
+    columns={"metric_value": "positivity"}
+)
+
+rsv_clean["date"] = pd.to_datetime(
+    rsv_clean["date"],
+    errors="coerce"
+)
+
+rsv_clean["positivity"] = pd.to_numeric(
+    rsv_clean["positivity"],
+    errors="coerce"
+)
+
+rsv_clean = rsv_clean.dropna(
+    subset=["date", "positivity"]
+)
+
+rsv_clean = rsv_clean.sort_values("date")
+
+# Check that each week has one observation
+assert not rsv_clean["date"].duplicated().any(), (
+    "Multiple observations remain for the same date."
+)
+
+# Check positivity is a percentage
+assert rsv_clean["positivity"].between(0, 100).all()
+
+output_path = Path("data/processed/rsv_clean.csv")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+rsv_clean.to_csv(output_path, index=False)
+
+print("Saved:", output_path)
+print("Rows:", len(rsv_clean))
+
+display(rsv_clean.head())
+
+9. Get downloaded records
+from pathlib import Path
+
+rsv_clean = rsv_df[
+    ["date", "metric_value"]
+].copy()
+
+rsv_clean = rsv_clean.rename(
+    columns={"metric_value": "positivity"}
+)
+
+rsv_clean["date"] = pd.to_datetime(
+    rsv_clean["date"],
+    errors="coerce"
+)
+
+rsv_clean["positivity"] = pd.to_numeric(
+    rsv_clean["positivity"],
+    errors="coerce"
+)
+
+rsv_clean = rsv_clean.dropna(
+    subset=["date", "positivity"]
+)
+
+rsv_clean = rsv_clean.sort_values("date")
+
+# Check that each week has one observation
+assert not rsv_clean["date"].duplicated().any(), (
+    "Multiple observations remain for the same date."
+)
+
+# Check positivity is a percentage
+assert rsv_clean["positivity"].between(0, 100).all()
+
+output_path = Path("data/processed/rsv_clean.csv")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+rsv_clean.to_csv(output_path, index=False)
+
+print("Saved:", output_path)
+print("Rows:", len(rsv_clean))
+
+display(rsv_clean.head())
+
+10. Display themes
+from pathlib import Path
+
+rsv_clean = rsv_df[
+    ["date", "metric_value"]
+].copy()
+
+rsv_clean = rsv_clean.rename(
+    columns={"metric_value": "positivity"}
+)
+
+rsv_clean["date"] = pd.to_datetime(
+    rsv_clean["date"],
+    errors="coerce"
+)
+
+rsv_clean["positivity"] = pd.to_numeric(
+    rsv_clean["positivity"],
+    errors="coerce"
+)
+
+rsv_clean = rsv_clean.dropna(
+    subset=["date", "positivity"]
+)
+
+rsv_clean = rsv_clean.sort_values("date")
+
+# Check that each week has one observation
+assert not rsv_clean["date"].duplicated().any(), (
+    "Multiple observations remain for the same date."
+)
+
+# Check positivity is a percentage
+assert rsv_clean["positivity"].between(0, 100).all()
+
+output_path = Path("data/processed/rsv_clean.csv")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+rsv_clean.to_csv(output_path, index=False)
+
+print("Saved:", output_path)
+print("Rows:", len(rsv_clean))
+
+display(rsv_clean.head())
+
+11. Investigate RSV positivity
+from pathlib import Path
+
+rsv_clean = rsv_df[
+    ["date", "metric_value"]
+].copy()
+
+rsv_clean = rsv_clean.rename(
+    columns={"metric_value": "positivity"}
+)
+
+rsv_clean["date"] = pd.to_datetime(
+    rsv_clean["date"],
+    errors="coerce"
+)
+
+rsv_clean["positivity"] = pd.to_numeric(
+    rsv_clean["positivity"],
+    errors="coerce"
+)
+
+rsv_clean = rsv_clean.dropna(
+    subset=["date", "positivity"]
+)
+
+rsv_clean = rsv_clean.sort_values("date")
+
+# Check that each week has one observation
+assert not rsv_clean["date"].duplicated().any(), (
+    "Multiple observations remain for the same date."
+)
+
+# Check positivity is a percentage
+assert rsv_clean["positivity"].between(0, 100).all()
+
+output_path = Path("data/processed/rsv_clean.csv")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+rsv_clean.to_csv(output_path, index=False)
+
+print("Saved:", output_path)
+print("Rows:", len(rsv_clean))
+
+display(rsv_clean.head())
+
+12. Clean the data
+from pathlib import Path
+
+rsv_clean = rsv_df[
+    ["date", "metric_value"]
+].copy()
+
+rsv_clean = rsv_clean.rename(
+    columns={"metric_value": "positivity"}
+)
+
+rsv_clean["date"] = pd.to_datetime(
+    rsv_clean["date"],
+    errors="coerce"
+)
+
+rsv_clean["positivity"] = pd.to_numeric(
+    rsv_clean["positivity"],
+    errors="coerce"
+)
+
+rsv_clean = rsv_clean.dropna(
+    subset=["date", "positivity"]
+)
+
+rsv_clean = rsv_clean.sort_values("date")
+
+# Check that each week has one observation
+assert not rsv_clean["date"].duplicated().any(), (
+    "Multiple observations remain for the same date."
+)
+
+# Check positivity is a percentage
+assert rsv_clean["positivity"].between(0, 100).all()
+
+output_path = Path("data/processed/rsv_clean.csv")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+rsv_clean.to_csv(output_path, index=False)
+
+print("Saved:", output_path)
+print("Rows:", len(rsv_clean))
+
+display(rsv_clean.head())
+
+14. Parse data 
